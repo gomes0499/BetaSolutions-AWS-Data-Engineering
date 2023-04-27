@@ -2,7 +2,7 @@ resource "aws_dms_replication_instance" "this" {
   replication_instance_id     = var.replication_instance_identifier
   replication_instance_class  = var.replication_instance_class
   allocated_storage           = var.allocated_storage_dms
-  replication_subnet_group_id = var.subnet_group_name_dms
+  replication_subnet_group_id = aws_dms_replication_subnet_group.dms_subnet_group.id
 }
 
 resource "aws_dms_endpoint" "source" {
@@ -22,9 +22,14 @@ resource "aws_dms_endpoint" "destination" {
 
 
   s3_settings {
-    bucket_name                       = var.s3_destination_bucket_arn
-    service_access_role_arn           = var.service_access_role_arn
-    bucket_folder                     = "raw"
+    bucket_name             = var.s3_destination_bucket_arn
+    service_access_role_arn = var.service_access_role_arn
+    bucket_folder           = "raw"
   }
 }
 
+resource "aws_dms_replication_subnet_group" "dms_subnet_group" {
+  replication_subnet_group_id          = "dms-subnet-group"
+  replication_subnet_group_description = "DMS Subnet Group"
+  subnet_ids                           = var.subnet_ids
+}

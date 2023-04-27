@@ -23,11 +23,10 @@ variable "db_instance_class" {
   type        = string
 }
 
-variable "subnet_group_name" {
-  description = "The name of the  RDS subnet group."
-  type        = string
+variable "subnet_ids" {
+  type        = list(string)
+  description = "List of subnet IDs to be used for the resource"
 }
-
 
 variable "vpc_security_group_ids" {
   description = "A list of VPC security group IDs to associate with the RDS instance."

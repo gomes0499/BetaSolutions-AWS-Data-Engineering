@@ -1,47 +1,55 @@
-resource "aws_s3_bucket" "datalake" {
-  bucket = var.bucket_name
-  acl    = "private"
-
-  tags = {
-    Terraform = "true"
-    Environment = "datalake"
-  }
+output "airflow_scripts_bucket_arn" {
+  description = "The ARN of the S3 bucket containing the Airflow script."
+  value       = module.airflow.airflow_scripts_bucket_arn
 }
 
-resource "aws_s3_bucket_lifecycle_configuration" "datalake_lifecycle" {
-  rule {
-    id      = "datalake-rule"
-    status = "Enabled"
 
-    transition {
-      days          = 30
-      storage_class = "STANDARD_IA"
-    }
-
-    transition {
-      days          = 60
-      storage_class = "GLACIER"
-    }
-  }
-
-  bucket = aws_s3_bucket.datalake.id
+# Outputs for S3 Module
+output "bucket_id" {
+  value       = module.datalake_s3.bucket_id
+  description = "The ID of the created S3 bucket."
 }
 
-locals {
-  raw_folder = "raw/"
-  processed_folder = "processed/"
+output "raw_folder_key" {
+  value       = module.datalake_s3.raw_folder_key
+  description = "The key of the raw folder in the S3 bucket."
 }
 
-resource "aws_s3_bucket_object" "raw_folder" {
-  bucket       = aws_s3_bucket.datalake.id
-  key          = local.raw_folder
-  source       = "/dev/null"
-  content_type = "application/x-directory"
+output "processed_folder_key" {
+  value       = module.datalake_s3.processed_folder_key
+  description = "The key of the processed folder in the S3 bucket."
 }
 
-resource "aws_s3_bucket_object" "processed_folder" {
-  bucket       = aws_s3_bucket.datalake.id
-  key          = local.processed_folder
-  source       = "/dev/null"
-  content_type = "application/x-directory"
+output "raw_bucket_arn" {
+  description = "The ARN of the S3 bucket containing the raw folder."
+  value       = module.datalake_s3.bucket_arn
 }
+
+output "glue_scripts_bucket_arn" {
+  description = "The ARN of the S3 bucket containing the Glue job script."
+  value       = module.datalake_s3.glue_scripts_bucket_arn
+}
+
+# Output for RDS Module
+output "db_instance_endpoint" {
+  value       = module.rds.rds_endpoint
+  description = "The connection endpoint of the RDS instance."
+}
+
+output "db_instance_arn" {
+  value       = module.rds.db_instance_arn
+  description = "The ARN of the RDS instance."
+}
+
+# Output for Redshift Module
+output "redshift_cluster_id" {
+  description = "The unique identifier for the Redshift cluster."
+  value       = module.redshift.redshift_cluster_id
+}
+
+output "redshift_endpoint" {
+  description = "The connection endpoint for the Redshift cluster."
+  value       = module.redshift.redshift_endpoint
+}
+
+

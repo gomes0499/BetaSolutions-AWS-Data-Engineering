@@ -13,9 +13,9 @@ variable "allocated_storage_dms" {
   type        = number
 }
 
-variable "subnet_group_name_dms" {
-  description = "The name of the existing DMS subnet group."
-  type        = string
+variable "subnet_ids" {
+  type        = list(string)
+  description = "List of subnet IDs to be used for the resource"
 }
 
 variable "rds_endpoint" {
@@ -37,7 +37,6 @@ variable "s3_destination_bucket_arn" {
   description = "The Amazon Resource Name (ARN) of the destination S3 bucket."
   type        = string
 }
-
 
 variable "service_access_role_arn" {
   description = "The Amazon Resource Name (ARN) of the destination S3 bucket."

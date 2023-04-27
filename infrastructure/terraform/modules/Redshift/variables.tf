@@ -28,8 +28,7 @@ variable "vpc_security_group_ids" {
   type        = list(string)
 }
 
-variable "subnet_group_name" {
-  description = "The name of the existing Redshift subnet group."
-  type        = string
+variable "subnet_ids" {
+  type        = list(string)
+  description = "List of subnet IDs to be used for the resource"
 }
-
