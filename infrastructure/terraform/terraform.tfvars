@@ -10,9 +10,9 @@ db_password            = "Wu9rdspassword"
 db_instance_class      = "db.t3.micro"
 vpc_security_group_ids = ["sg-0b2ee550a356a8cb9"]
 allocated_storage      = 20
-engine_version         = "13.3"
 multi_az               = false
 storage_encrypted      = true
+database_name          = "postgres"
 
 # Vars for Redshift Module
 cluster_identifier = "wu9-redshift-cluster"
@@ -67,3 +67,4 @@ user_pool_domain      = "wu9userpooldomain"
 resources_vpc_name     = "resources-vpc"
 resources_vpc_cidr     = "10.1.0.0/16"
 resources_subnet_cidrs = ["10.1.1.0/24", "10.1.2.0/24"]
+resources_subnet_azs   = ["us-east-1a", "us-east-1b"] 

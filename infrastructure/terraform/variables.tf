@@ -46,11 +46,6 @@ variable "allocated_storage" {
   type        = number
 }
 
-variable "engine_version" {
-  description = "The version of the database engine."
-  type        = string
-}
-
 variable "multi_az" {
   description = "If true, the RDS instance will be created in multiple availability zones."
   type        = bool
@@ -117,6 +112,11 @@ variable "rds_password" {
 
 variable "service_access_role_arn" {
   description = "The Amazon Resource Name (ARN) of the destination S3 bucket."
+  type        = string
+}
+
+variable "database_name" {
+  description = "The name of the db to be allocated as source."
   type        = string
 }
 
@@ -255,4 +255,10 @@ variable "resources_vpc_cidr" {
 variable "resources_subnet_cidrs" {
   description = "The CIDR blocks for the resources subnets"
   type        = list(string)
+}
+
+variable "resources_subnet_azs" {
+  description = "A list of Availability Zones for the resources subnets"
+  type        = list(string)
+  default     = ["us-west-2a", "us-west-2b"]
 }

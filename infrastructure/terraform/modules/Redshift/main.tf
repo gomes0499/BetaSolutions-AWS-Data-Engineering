@@ -6,6 +6,7 @@ resource "aws_redshift_cluster" "default" {
   master_password           = var.master_password
   vpc_security_group_ids    = var.vpc_security_group_ids
   cluster_subnet_group_name = aws_redshift_subnet_group.redshift_subnet_group.name
+  skip_final_snapshot       = true
 }
 
 

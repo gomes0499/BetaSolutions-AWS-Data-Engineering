@@ -15,9 +15,8 @@ module "rds" {
   db_password            = var.db_password
   db_instance_class      = var.db_instance_class
   subnet_ids             = module.vpc_resources.resources_subnet_ids
-  vpc_security_group_ids = var.vpc_security_group_ids
+  vpc_security_group_ids = [module.vpc_resources.resources_sg_id]
   allocated_storage      = var.allocated_storage
-  engine_version         = var.db_engine
   multi_az               = var.multi_az
   storage_encrypted      = var.storage_encrypted
 }
@@ -30,7 +29,7 @@ module "redshift" {
   number_of_nodes        = var.number_of_nodes
   master_username        = var.master_username
   master_password        = var.master_password
-  vpc_security_group_ids = var.vpc_security_group_ids
+  vpc_security_group_ids = [module.vpc_resources.resources_sg_id]
   subnet_ids             = module.vpc_resources.resources_subnet_ids
 }
 
@@ -39,13 +38,16 @@ module "dms" {
   source                          = "./modules/DMS"
   replication_instance_identifier = var.replication_instance_identifier
   replication_instance_class      = var.replication_instance_class
-  allocated_storage_dms           = var.allocated_storage
+  allocated_storage_dms           = var.allocated_storage_dms
   subnet_ids                      = module.vpc_resources.resources_subnet_ids
   rds_username                    = var.rds_username
   rds_password                    = var.rds_password
   rds_endpoint                    = module.rds.rds_endpoint
-  s3_destination_bucket_arn       = module.datalake_s3.bucket_arn
+  s3_destination_bucket_arn       = var.bucket_name
   service_access_role_arn         = var.service_access_role_arn
+  dms_vpc_role_arn                = module.dms.dms_vpc_management_role_arn
+  s3_bucket_arn                   = module.datalake_s3.bucket_arn
+  database_name                   = var.database_name
 }
 
 # Glue
@@ -59,15 +61,15 @@ module "glue" {
 }
 
 # Airflow
-module "airflow" {
-  source = "./modules/Airflow"
+# module "airflow" {
+#   source = "./modules/Airflow"
 
-  airflow_environment_name   = var.airflow_environment_name
-  airflow_role_arn           = var.airflow_role_arn
-  security_group_ids         = var.security_group_ids
-  subnet_ids                 = module.vpc_resources.resources_subnet_ids
-  airflow_scripts_bucket_arn = module.datalake_s3.airflow_scripts_bucket_arn
-}
+#   airflow_environment_name   = var.airflow_environment_name
+#   airflow_role_arn           = var.airflow_role_arn
+#   security_group_ids         = [module.vpc_resources.resources_sg_id]
+#   subnet_ids                 = module.vpc_resources.resources_subnet_ids
+#   airflow_scripts_bucket_arn = module.datalake_s3.airflow_scripts_bucket_arn
+# }
 
 # SNS
 module "sns" {
@@ -96,6 +98,7 @@ module "vpc_resources" {
   resources_vpc_name     = var.resources_vpc_name
   resources_vpc_cidr     = var.resources_vpc_cidr
   resources_subnet_cidrs = var.resources_subnet_cidrs
+  resources_subnet_azs   = var.resources_subnet_azs
 }
 
 # EC2
@@ -113,14 +116,14 @@ module "ec2" {
 }
 
 # Api Gateway
-module "api_gateway" {
-  source = "./modules/ApiGateway"
+# module "api_gateway" {
+#   source = "./modules/ApiGateway"
 
-  api_name                = var.api_name
-  api_description         = var.api_description
-  integration_description = var.integration_description
-  ec2_web_server_url      = "http://${module.ec2.web_server_public_dns}:port" # Replace "port" with the port of application
-}
+#   api_name                = var.api_name
+#   api_description         = var.api_description
+#   integration_description = var.integration_description
+#   ec2_web_server_url      = "http://${module.ec2.web_server_public_dns}:port" # Replace "port" with the port of application
+# }
 
 # Cognito
 module "cognito" {

@@ -38,11 +38,6 @@ variable "allocated_storage" {
   type        = number
 }
 
-variable "engine_version" {
-  description = "The version of the database engine."
-  type        = string
-}
-
 variable "multi_az" {
   description = "If true, the RDS instance will be created in multiple availability zones."
   type        = bool

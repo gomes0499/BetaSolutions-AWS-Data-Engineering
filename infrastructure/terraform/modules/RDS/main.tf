@@ -1,7 +1,6 @@
 resource "aws_db_instance" "default" {
   identifier              = var.db_instance_identifier
   engine                  = var.db_engine
-  engine_version          = var.engine_version
   instance_class          = var.db_instance_class
   username                = var.db_username
   password                = var.db_password

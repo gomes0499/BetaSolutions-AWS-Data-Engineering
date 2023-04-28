@@ -7,3 +7,8 @@ output "db_instance_arn" {
   value       = aws_db_instance.default.arn
   description = "The ARN of the RDS instance."
 }
+
+output "database_name" {
+  description = "The name of the database in the RDS instance"
+  value       = aws_db_instance.default.db_name
+}

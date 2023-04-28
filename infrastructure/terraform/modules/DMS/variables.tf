@@ -13,6 +13,11 @@ variable "allocated_storage_dms" {
   type        = number
 }
 
+variable "database_name" {
+  description = "The name of the db to be allocated as source."
+  type        = string
+}
+
 variable "subnet_ids" {
   type        = list(string)
   description = "List of subnet IDs to be used for the resource"
@@ -42,3 +47,14 @@ variable "service_access_role_arn" {
   description = "The Amazon Resource Name (ARN) of the destination S3 bucket."
   type        = string
 }
+
+variable "s3_bucket_arn" {
+  type        = string
+  description = "ARN of the S3 bucket to be used as the destination for DMS"
+}
+
+variable "dms_vpc_role_arn" {
+  type        = string
+  description = "ARN of the S3 bucket to be used as the destination for DMS"
+}
+
