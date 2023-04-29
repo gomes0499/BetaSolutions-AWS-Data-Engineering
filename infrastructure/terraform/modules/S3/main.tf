@@ -60,7 +60,7 @@ resource "aws_s3_bucket" "glue_scripts" {
 resource "aws_s3_object" "glue_script_file" {
   bucket = aws_s3_bucket.glue_scripts.bucket
   key    = "spark/spark-job.py"
-  source = "../../scripts/spark-job.py"
+  source = "../../scripts/data_engineer/spark-job.py"
 }
 
 # Airflow Bucket
@@ -76,7 +76,7 @@ resource "aws_s3_bucket" "airflow_scripts" {
 resource "aws_s3_object" "airflow_script_file" {
   bucket = aws_s3_bucket.airflow_scripts.bucket
   key    = "dag.py"
-  source = "../../scripts/dag.py"
+  source = "../../scripts/data_engineer/dag.py"
 }
 
 resource "aws_s3_object" "airflow_script_folder" {
