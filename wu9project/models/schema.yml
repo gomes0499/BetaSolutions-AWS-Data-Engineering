@@ -1,0 +1,96 @@
+version: 2
+
+models:
+  - name: denormalized_sales
+    description: A denormalized view of sales data, including customer, product, and date information.
+    columns:
+      - name: SalesID
+        description: Unique identifier for each sale.
+        tests:
+          - unique
+          - not_null
+      - name: CustomerID
+        description: Unique identifier for each customer.
+        tests:
+          - not_null
+      - name: ProductID
+        description: Unique identifier for each product.
+        tests:
+          - not_null
+      - name: DateID
+        description: Unique identifier for each date.
+        tests:
+          - not_null
+      - name: Quantity
+        description: The quantity of products sold in each sale.
+        tests:
+          - not_null
+      - name: TotalAmount
+        description: The total amount for each sale.
+        tests:
+          - not_null
+      - name: FirstName
+        description: Customer's first name.
+        tests:
+          - not_null
+      - name: LastName
+        description: Customer's last name.
+        tests:
+          - not_null
+      - name: Email
+        description: Customer's email address.
+        tests:
+          - not_null
+          - unique
+      - name: Gender
+        description: Customer's gender.
+      - name: DateOfBirth
+        description: Customer's date of birth.
+      - name: RegistrationDate
+        description: Customer's registration date.
+      - name: Address
+        description: Customer's address.
+      - name: City
+        description: Customer's city.
+      - name: State
+        description: Customer's state.
+      - name: Country
+        description: Customer's country.
+      - name: ZipCode
+        description: Customer's zip code.
+      - name: ProductName
+        description: Product name.
+        tests:
+          - not_null
+      - name: CategoryID
+        description: Unique identifier for each category.
+        tests:
+          - not_null
+      - name: CategoryName
+        description: Category name.
+        tests:
+          - not_null
+      - name: Brand
+        description: Product brand.
+      - name: Description
+        description: Product description.
+      - name: Price
+        description: Product price.
+        tests:
+          - not_null
+      - name: ImageURL
+        description: Product image URL.
+      - name: Date
+        description: Date of the sale.
+        tests:
+          - not_null
+      - name: Day
+        description: Day of the sale.
+      - name: Month
+        description: Month of the sale.
+      - name: Year
+        description: Year of the sale.
+      - name: Quarter
+        description: Quarter of the sale.
+      - name: Weekday
+        description: Weekday of the sale.

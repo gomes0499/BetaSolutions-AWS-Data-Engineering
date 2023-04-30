@@ -1,0 +1,11 @@
+default:
+  target: dev
+  outputs:
+    dev:
+      type: redshift
+      host: your_redshift_host
+      port: 5439
+      user: your_redshift_user
+      password: your_redshift_password
+      dbname: your_redshift_database
+      schema: your_redshift_schema
