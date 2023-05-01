@@ -1,0 +1,9 @@
+.DS_Store
+.terraform
+.terraform.lock.hcl
+terraform.tfstate
+config
+wu9keypair.pem
+wu9project.fig
+util.sh
+reports
